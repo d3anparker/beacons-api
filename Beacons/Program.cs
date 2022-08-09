@@ -1,18 +1,9 @@
+using Beacons.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(policy =>
-    {
-        var origins = builder.Configuration["AllowedOrigins"].Split(";", StringSplitOptions.RemoveEmptyEntries);
-
-        policy.WithOrigins(origins)
-            .AllowAnyHeader()
-            .AllowAnyMethod()
-            .WithExposedHeaders("*");
-    });
-});
+builder.Services.AddBeaconServices(builder.Configuration);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

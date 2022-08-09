@@ -1,4 +1,5 @@
 ﻿using Beacons.Models;
+using Beacons.Services.Beacons;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Beacons.Controllers
@@ -6,25 +7,34 @@ namespace Beacons.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class BeaconController : ControllerBase
-    {
-        [HttpGet("{id:guid}", Name = "GetBeaconById")]
-        public Task<IActionResult> GetAsync(Guid id)
+    {   
+        private readonly IBeaconService _beaconService;
+
+        public BeaconController(IBeaconService beaconService)
         {
-            IActionResult result = Ok(new Beacon { Message = "Hello" });
-            return Task.FromResult(result);
+            _beaconService = beaconService;
+        }
+
+        [HttpGet("{id:guid}", Name = "GetBeaconById")]
+        public async Task<IActionResult> GetAsync(Guid id)
+        {
+            var beacon = await _beaconService.GetBeaconByIdAsync(id);
+
+            return Ok(beacon);
         }
 
         [HttpPost]
-        public Task<IActionResult> CreateAsync([FromBody]BeaconCreateRequest request)
+        public async Task<IActionResult> CreateAsync([FromBody]BeaconCreateRequest request)
         {
-            var model = new
+            var model = new Beacon()
             {
-                Id = Guid.NewGuid()
+                Id = Guid.NewGuid(),
+                Message = "Horse"
             };
+            
+            await _beaconService.CreateBeaconAsync(model);
 
-            IActionResult response = CreatedAtRoute("GetBeaconById", new { id = model.Id }, model);
-
-            return Task.FromResult(response);
+            return CreatedAtRoute("GetBeaconById", new { id = model.Id }, model);
         } 
     }
 }
