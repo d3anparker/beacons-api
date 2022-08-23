@@ -1,4 +1,5 @@
-﻿using Beacons.Models;
+﻿using Beacons.Data;
+using Beacons.Models.Requests;
 using Beacons.Services.Beacons;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +21,11 @@ namespace Beacons.Controllers
         {
             var beacon = await _beaconService.GetBeaconByIdAsync(id);
 
+            if(beacon is null)
+            {
+                return NotFound();
+            }
+
             return Ok(beacon);
         }
 
@@ -28,8 +34,7 @@ namespace Beacons.Controllers
         {
             var model = new Beacon()
             {
-                Id = Guid.NewGuid(),
-                Message = "Horse"
+                Longitude = request.Longitude,
             };
             
             await _beaconService.CreateBeaconAsync(model);

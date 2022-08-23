@@ -1,5 +1,4 @@
-﻿using Beacons.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Beacons.Data
 {

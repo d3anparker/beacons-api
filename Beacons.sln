@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beacons", "Beacons\Beacons.csproj", "{36CF710E-5C11-4E68-8EBA-31835EAD5DC8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Beacons", "Beacons\Beacons.csproj", "{36CF710E-5C11-4E68-8EBA-31835EAD5DC8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{BED875AD-BC9B-444C-A3BC-282B7D2AD3F6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{36CF710E-5C11-4E68-8EBA-31835EAD5DC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36CF710E-5C11-4E68-8EBA-31835EAD5DC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36CF710E-5C11-4E68-8EBA-31835EAD5DC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BED875AD-BC9B-444C-A3BC-282B7D2AD3F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BED875AD-BC9B-444C-A3BC-282B7D2AD3F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BED875AD-BC9B-444C-A3BC-282B7D2AD3F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BED875AD-BC9B-444C-A3BC-282B7D2AD3F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

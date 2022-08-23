@@ -1,5 +1,5 @@
 ﻿using Beacons.Data;
-using Beacons.Models;
+using Beacons.Models.Results;
 using Microsoft.EntityFrameworkCore;
 
 namespace Beacons.Services.Beacons
@@ -13,12 +13,14 @@ namespace Beacons.Services.Beacons
             _context = context;
         }
 
-        public async Task<Beacon> CreateBeaconAsync(Beacon beacon)
+        public async Task<ServiceResult<Beacon>> CreateBeaconAsync(Beacon beacon)
         {
+            var result = new ServiceResult<Beacon>(beacon);
+
             _context.Beacons.Add(beacon);
             await _context.SaveChangesAsync();
 
-            return beacon;
+            return result;
         }
 
         public async Task<Beacon?> GetBeaconByIdAsync(Guid id) => await _context.Beacons.Where(x => x.Id == id).FirstOrDefaultAsync();

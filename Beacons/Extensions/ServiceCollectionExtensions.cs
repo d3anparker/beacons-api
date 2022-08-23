@@ -23,8 +23,11 @@ namespace Beacons.Extensions
                  });
              });
 
-            services.Configure<DatabaseOptions>(configuration.GetSection("Database"))
-                .AddTransient<IBeaconService, BeaconService>();
+            services.AddOptions<DatabaseOptions>()
+                .ValidateDataAnnotations()
+                .Bind(configuration.GetSection("Database"));
+
+            services.AddTransient<IBeaconService, BeaconService>();
 
             AddDatabase(services);
 
