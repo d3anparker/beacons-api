@@ -35,11 +35,17 @@ namespace Beacons.Controllers
             var model = new Beacon()
             {
                 Longitude = request.Longitude,
+                Latitude = request.Latitude
             };
             
-            await _beaconService.CreateBeaconAsync(model);
+            var response = await _beaconService.CreateBeaconAsync(model);
 
-            return CreatedAtRoute("GetBeaconById", new { id = model.Id }, model);
+            if(!response.Success)
+            {
+                return BadRequest(response.Errors);
+            }
+
+            return CreatedAtRoute("GetBeaconById", new { id = response.Data.Id }, model);
         } 
     }
 }

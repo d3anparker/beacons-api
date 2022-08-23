@@ -1,11 +1,16 @@
 using Beacons.Data;
+using Beacons.Options;
 using Beacons.Services.Beacons;
+using Beacons.Services.Dates;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Internal;
+using NSubstitute;
 
 namespace Tests
 {
-    public class Tests
+    [TestFixture]
+    public class BeaconServiceTests
     {
         private IBeaconService _sut;
         private Context _context;
@@ -24,7 +29,10 @@ namespace Tests
             _context.Beacons.Add(new Beacon() { Id = id });
             _context.SaveChanges();
 
-            _sut = new BeaconService(_context);
+            var dateTime = Substitute.For<IDateTime>();
+            dateTime.Now.Returns(DateTime.Now);
+
+            _sut = new BeaconService(_context, new BeaconOptions() { ExpiryInMinutes = 10 }, dateTime);
         }
 
         [OneTimeTearDown]
@@ -79,6 +87,21 @@ namespace Tests
             var result = await _sut.CreateBeaconAsync(beacon);
 
             result.Data.Should().Be(beacon);
+        }
+
+        [Test]
+        public async Task Created_beacon_expiry_should_be_set_distance_from_creation()
+        {
+            var beacon = new Beacon()
+            {
+                Id = Guid.NewGuid(),
+                Latitude = 50,
+                Longitude = 50
+            };
+
+            var result = await _sut.CreateBeaconAsync(beacon);
+
+            result.Data.Expiry.Should().Be(result.Data.Created.AddMinutes(10));
         }
     }
 }

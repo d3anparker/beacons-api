@@ -1,6 +1,7 @@
 ﻿using Beacons.Data;
 using Beacons.Options;
 using Beacons.Services.Beacons;
+using Beacons.Services.Dates;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -23,25 +24,36 @@ namespace Beacons.Extensions
                  });
              });
 
-            services.AddOptions<DatabaseOptions>()
-                .ValidateDataAnnotations()
-                .Bind(configuration.GetSection("Database"));
+            services.AddTransient<IBeaconService, BeaconService>()
+                .AddSingleton<IDateTime, DefaultDateTime>();
 
-            services.AddTransient<IBeaconService, BeaconService>();
-
-            AddDatabase(services);
+            AddDatabase(services, configuration);
+            AddBeaconOptions(services, configuration);
 
             return services;
         }
 
-        private static void AddDatabase(IServiceCollection services)
+        private static void AddDatabase(IServiceCollection services, IConfiguration configuration)
         {
+            services.AddOptions<DatabaseOptions>()
+            .ValidateDataAnnotations()
+                .Bind(configuration.GetSection("Database"));
+
             services.AddDbContext<Context>((provider, options) =>
             {
                 var dbOptions = provider.GetRequiredService<IOptions<DatabaseOptions>>().Value;
 
                 options.UseCosmos(dbOptions.AccountEndpoint, dbOptions.AccountKey, dbOptions.DatabaseName);
             });
+        }
+
+        private static void AddBeaconOptions(IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddOptions<BeaconOptions>()
+                .ValidateDataAnnotations()
+                .Bind(configuration.GetSection("Beacons"));
+
+            services.AddSingleton(provider => provider.GetRequiredService<IOptions<BeaconOptions>>().Value);
         }
     }
 }
