@@ -14,6 +14,11 @@ namespace Tests
             {
                 var descriptor = services.SingleOrDefault(s => s.ServiceType == typeof(DbContextOptions<Context>));
 
+                if(descriptor is null)
+                {
+                    throw new InvalidOperationException();
+                }
+
                 services.Remove(descriptor);
 
                 services.AddDbContext<Context>(options =>

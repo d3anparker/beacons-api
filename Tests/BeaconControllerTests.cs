@@ -1,4 +1,5 @@
-﻿using Beacons.Models.Requests;
+﻿using Beacons.Models;
+using Beacons.Models.Requests;
 using FluentAssertions;
 using System.Net;
 using System.Net.Http.Json;
@@ -46,8 +47,11 @@ namespace Tests
         {
             var request = new BeaconCreateRequest()
             {
-                Latitude = 50,
-                Longitude = 50
+                Beacon = new BeaconModel()
+                {
+                    Latitude = 50,
+                    Longitude = 50
+                }
             };
 
             var content = JsonContent.Create(request);            

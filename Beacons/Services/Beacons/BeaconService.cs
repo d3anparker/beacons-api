@@ -23,7 +23,7 @@ namespace Beacons.Services.Beacons
         {
             var result = new ServiceResult<Beacon>(beacon);
 
-            beacon.Created = _dateTime.Now;
+            beacon.Created = _dateTime.UtcNow;
             beacon.Expiry = beacon.Created.AddMinutes(_beaconOptions.ExpiryInMinutes);
 
             _context.Beacons.Add(beacon);

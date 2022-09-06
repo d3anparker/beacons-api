@@ -4,7 +4,6 @@ using Beacons.Services.Beacons;
 using Beacons.Services.Dates;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Internal;
 using NSubstitute;
 
 namespace Tests
@@ -30,7 +29,7 @@ namespace Tests
             _context.SaveChanges();
 
             var dateTime = Substitute.For<IDateTime>();
-            dateTime.Now.Returns(DateTime.Now);
+            dateTime.UtcNow.Returns(DateTime.Now);
 
             _sut = new BeaconService(_context, new BeaconOptions() { ExpiryInMinutes = 10 }, dateTime);
         }

@@ -1,4 +1,5 @@
 ﻿using Beacons.Data;
+using Beacons.Mapping;
 using Beacons.Options;
 using Beacons.Services.Beacons;
 using Beacons.Services.Dates;
@@ -25,6 +26,7 @@ namespace Beacons.Extensions
              });
 
             services.AddTransient<IBeaconService, BeaconService>()
+                .AddTransient<IBeaconMapper, BeaconMapper>()
                 .AddSingleton<IDateTime, DefaultDateTime>();
 
             AddDatabase(services, configuration);
@@ -36,7 +38,7 @@ namespace Beacons.Extensions
         private static void AddDatabase(IServiceCollection services, IConfiguration configuration)
         {
             services.AddOptions<DatabaseOptions>()
-            .ValidateDataAnnotations()
+                .ValidateDataAnnotations()
                 .Bind(configuration.GetSection("Database"));
 
             services.AddDbContext<Context>((provider, options) =>
