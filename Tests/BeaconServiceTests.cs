@@ -67,7 +67,6 @@ namespace Tests
                 Longitude = 50
             };
 
-
             var result = await _sut.CreateBeaconAsync(beacon);
 
             result.Success.Should().BeTrue();
@@ -101,6 +100,21 @@ namespace Tests
             var result = await _sut.CreateBeaconAsync(beacon);
 
             result.Data.Expiry.Should().Be(result.Data.Created.AddMinutes(10));
+        }
+
+        [Test]
+        public async Task Created_beacon_ttl_should_be_set_distance_from_creation()
+        {
+            var beacon = new Beacon()
+            {
+                Id = Guid.NewGuid(),
+                Latitude = 50,
+                Longitude = 50
+            };
+
+            var result = await _sut.CreateBeaconAsync(beacon);
+
+            result.Data.TimeToLive.Should().Be(600);
         }
     }
 }

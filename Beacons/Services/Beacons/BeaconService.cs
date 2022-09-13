@@ -25,6 +25,7 @@ namespace Beacons.Services.Beacons
 
             beacon.Created = _dateTime.UtcNow;
             beacon.Expiry = beacon.Created.AddMinutes(_beaconOptions.ExpiryInMinutes);
+            beacon.TimeToLive = _beaconOptions.ExpiryInMinutes * 60;
 
             _context.Beacons.Add(beacon);
             await _context.SaveChangesAsync();

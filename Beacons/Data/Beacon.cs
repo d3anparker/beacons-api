@@ -7,5 +7,6 @@
         public double Longitude { get; set; }
         public DateTime Created { get; set; }
         public DateTime Expiry { get; set; }
+        public int TimeToLive { get; set; }
     }
 }

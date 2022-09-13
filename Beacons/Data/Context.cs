@@ -18,6 +18,10 @@ namespace Beacons.Data
                 .HasNoDiscriminator()
                 .HasPartitionKey(x => x.Id);
 
+            modelBuilder.Entity<Beacon>()
+                .Property(x => x.TimeToLive)
+                .ToJsonProperty("ttl");
+
             base.OnModelCreating(modelBuilder);
         }
     }
