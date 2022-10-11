@@ -45,7 +45,8 @@ namespace Tests
                 Latitude = 50,
                 Longitude = 50,
                 Created = DateTime.Parse("1 Jan 2022 10:00"),
-                Expiry = DateTime.Parse("1 Jan 2022 12:00")
+                Expiry = DateTime.Parse("1 Jan 2022 12:00"),
+                TimeToLive = 7200
             });
 
             context.SaveChanges();

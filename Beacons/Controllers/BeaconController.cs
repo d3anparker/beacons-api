@@ -1,6 +1,4 @@
-﻿using Beacons.Data;
-using Beacons.Mapping;
-using Beacons.Models;
+﻿using Beacons.Mapping;
 using Beacons.Models.Requests;
 using Beacons.Services.Beacons;
 using Microsoft.AspNetCore.Mvc;
